@@ -1,3 +1,4 @@
+// Import necessary libraries
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -19,27 +20,28 @@ void fillRandomCells(int** arr, int rows, int cols, int numFilled);
 int solveSudoku(int** arr, int rows, int cols);
 void userInput(int** arr, int rows, int cols); */
 
+// Checks the num's possibility of being in gametable
 int isValid(int** arr, int size, int row, int col, int num) {
     for (int i = 0; i < size; ++i) {
-        if (*(*(arr + i) + col) == num) 
+        if (*(*(arr + i) + col) == num) // searching for dublicates in rows
             return 0;
     }
     for (int j = 0; j < size; ++j) {
-        if (*(*(arr + row) + j) == num) 
+        if (*(*(arr + row) + j) == num) // searching for dublicates in rows
             return 0;
     }
     int sqrtSize = (int)sqrt(size);
-    int boxRow = row - row % sqrtSize; //
-    int boxCol = col - col % sqrtSize; // можно упросить
+    int boxRow = row - row % sqrtSize;
+    int boxCol = col - col % sqrtSize; 
     for (int i = 0; i < sqrtSize; i++) {
         for (int j = 0; j < sqrtSize; j++) {
-            if (*(*(arr + i + boxRow) + j + boxCol) == num) 
+            if (*(*(arr + i + boxRow) + j + boxCol) == num) // // searching for dublicates in squares
                 return 0;
         }
     }
     return 1;
 }
-
+// Important function for gametable output
 void displayField(int** arr, int size, int chosenRow, int chosenCol) {
     printf("\n");
     for (int i = 0; i < size; i++) {
@@ -62,7 +64,7 @@ void displayField(int** arr, int size, int chosenRow, int chosenCol) {
         printf("\n");
     }
 }
-
+// Fills the gametable with the first numbers
 void fillRandomCells(int** arr, int size, int numFilled) {
     int filled = 0;
     while (filled < numFilled) {
@@ -76,6 +78,7 @@ void fillRandomCells(int** arr, int size, int numFilled) {
     }
 }
 
+// Checks if all cells are filled (user's mode)
 int isFilled(int** arr, int size){
     for (int i=0;i<size;++i){
         for (int j=0;j<size;++j){
@@ -87,6 +90,7 @@ int isFilled(int** arr, int size){
     
 }
 
+// Bruteforce for autosolve mode
 int solveSudoku(int** arr, int size) {
     for (int row = 0; row < size; row++) {
         for (int col = 0; col < size; col++) {
@@ -109,6 +113,7 @@ int solveSudoku(int** arr, int size) {
     return 1;
 }
 
+// Defines user's mode
 void userInput(int** arr, int size) {
     int currentRow = 0, currentCol = 0;
     int num;
