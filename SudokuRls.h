@@ -8,17 +8,10 @@
 #define st 1
 #define fn 9
 
-/*
-typedef char* str;
-typedef void (*gametable)(int, int);
-*/
+#ifndef SUDOKU_H
+#define SUDOKU_H
+#endif
 
-/*
-int isValid(int** arr, int rows, int cols, int row, int col, int num);
-void displayField(int** arr, int rows, int cols, int chosenRow, int chosenCol);
-void fillRandomCells(int** arr, int rows, int cols, int numFilled);
-int solveSudoku(int** arr, int rows, int cols);
-void userInput(int** arr, int rows, int cols); */
 
 // Checks the num's possibility of being in gametable
 int isValid(int** arr, int size, int row, int col, int num) {
@@ -35,13 +28,14 @@ int isValid(int** arr, int size, int row, int col, int num) {
     int boxCol = col - col % sqrtSize; 
     for (int i = 0; i < sqrtSize; i++) {
         for (int j = 0; j < sqrtSize; j++) {
-            if (*(*(arr + i + boxRow) + j + boxCol) == num) // // searching for dublicates in squares
+            if (*(*(arr + i + boxRow) + j + boxCol) == num) // searching for dublicates in squares
                 return 0;
         }
     }
     return 1;
 }
-// Important function for gametable output
+
+// Function is generating gametable 
 void displayField(int** arr, int size, int chosenRow, int chosenCol) {
     printf("\n");
     for (int i = 0; i < size; i++) {
@@ -100,7 +94,7 @@ int solveSudoku(int** arr, int size) {
                         *(*(arr + row) + col) = num;
                         system("cls");
                         displayField(arr, size, -1, -1);
-                        Sleep(300);
+                        Sleep(100);
                         if (solveSudoku(arr, size)) 
                             return 1;
                         *(*(arr + row) + col) = 0;
@@ -146,7 +140,7 @@ void userInput(int** arr, int size) {
             if (num >= 1 && num <= size && *(*(arr+currentRow)+currentCol) == 0 && isValid(arr, size, currentRow, currentCol, num)) {
                 *(*(arr+currentRow)+currentCol)  = num;
             } else {
-                printf("Invalid number or cell already filled.\n"); // solve the problem with changing user's inputs
+                printf("Invalid number or cell already filled.\n"); 
                 Sleep(1000);
             }
         }

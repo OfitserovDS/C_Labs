@@ -2,6 +2,9 @@
 #include "SudokuRls.h"
 
 
+#define MODE 1
+
+
 int main() {
     srand(time(0));
     int size, op;
@@ -23,25 +26,21 @@ int main() {
     // Function call to fill first cells on gametable
     fillRandomCells(arr, size, size * difficultyMode);
 
-    
-    printf("Choose the game mode:\n1. User's mode \n2. Auto solve\n");
-    scanf("%d", &mode);
-    if (mode == 1) {
+    #if MODE==1
         userInput(arr, size); // Function call to start user's mode
-    }
-
-    else if (mode == 2) {
+    
+    #elif MODE==0
         if (!solveSudoku(arr, size)) // Autosolver tricky call 
             printf("Sudoku puzzle is unsolvable.\n");
         else {
             displayField(arr, size, -1, -1);
             printf("Easy for computer!");
         }
-    }
-
+    #endif
     // Freeing up memory
     for (int i = 0; i < size; ++i) 
         free(*(arr + i));
     free(arr);
     return 0;
 }
+
